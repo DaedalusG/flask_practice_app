@@ -9,7 +9,56 @@
 
 <body>
     <h1>Calendar working.</h1>
-
+    <form method="post" action="/">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}
+            {{ form.name(size=32) }}
+        </p>
+        <p>
+            {{ form.start_date.label }}
+            {{ form.start_date(size=32) }}
+        </p>
+        <p>
+            {{ form.start_time.label }}
+            {{ form.start_time(size=32) }}
+        </p>
+        <p>
+            {{ form.end_date.label }}
+            {{ form.end_date(size=32) }}
+        </p>
+        <p>
+            {{ form.end_time.label }}
+            {{ form.end_time(size=32) }}
+        </p>
+        <p>
+            {{ form.description.label }}
+            {{ form.description(size=32) }}
+        </p>
+        <p>
+            {{ form.private.label}}
+            {{form.private(size=32)}}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[1] }}</td>
+                <td>{{row[2].strftime("%H:%M")}}</td>
+                <td>{{row[3].strftime("%H:%M")}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 
 </html>
