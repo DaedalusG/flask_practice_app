@@ -1,4 +1,4 @@
-from flask import (Blueprint, render_template, make_response)
+from flask import (Blueprint, render_template, redirect)
 from app.forms import AppointmentForm
 from datetime import datetime
 import psycopg2
@@ -27,13 +27,13 @@ def main():
                                 'private': form.private.data
                             }
                     curs.execute(f"""INSERT INTO appointments (name, start_datetime, end_datetime, description, private) 
-                                     VALUES (%{params['name']}, %{params['start_datetime']}, %{params['end_datetime']}, %{params['description']}, %{params['private']})
+                                     VALUES (%s, %s, %s, %s, %s)
                                   """,
-                                  ('name': params['name'],
-                                   'start_datetime': params['start_datetime'],
-                                   'end_datetime': params['end_datetime'],
-                                   'description': params['description'],
-                                   'private': params['private']))
+                                  (params['name'],
+                                   params['start_datetime'],
+                                   params['end_datetime'],
+                                   params['description'],
+                                   params['private']))
                     return redirect('/')
     with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
         with conn.cursor() as curs:
